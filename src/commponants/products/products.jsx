@@ -10,18 +10,21 @@ import "..//..//commponants/products/product.css"
 
 const DummyProduct = [
   {
+    id:1,
     img:product1,
     name:'product 1',
     price:'20'
 
   },
   {
+    id:2,
     img:product2,
     name:'product 2',
     price:'30'
 
   },
   {
+    id:3,
     img:product3,
     name:'product 3',
     price:'40'
@@ -35,10 +38,10 @@ const DummyProduct = [
 
  const Products = () => {
   const [Cartlist , setCartList] = useState([]);
-  console.log(Cartlist);
   
   
-   const cartHanlder = (product) =>{   
+   const cartHandler = (product) =>{  
+    const isExist = Cartlist.find((cart)=> cart.id === product.id);
     setCartList((prev) => [...prev,product]);
    };
     
@@ -63,7 +66,7 @@ const DummyProduct = [
           <Box className='d-flex justify-content-between mt-3'>
           <ShareIcon />
           <FavoriteIcon />
-          <AddShoppingCartIcon onClick={()=>{cartHanlder(product)}} />
+          <AddShoppingCartIcon onClick={()=>{cartHandler(product)}} />
           </Box>
           </Box>
       </Box>
