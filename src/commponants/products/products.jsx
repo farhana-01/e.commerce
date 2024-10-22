@@ -1,4 +1,4 @@
-import { Box, Card, Divider, Typography } from '@mui/material';
+import { Box, Card, Divider, IconButton, Snackbar, Typography } from '@mui/material';
 import React, { useState } from 'react'
 import product1 from '..//../assets/menu-item-1.png'
 import product2 from '..//../assets/menu-item-2.png'
@@ -7,6 +7,8 @@ import ShareIcon from '@mui/icons-material/Share';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import "..//..//commponants/products/product.css"
+import CloseIcon from '@mui/icons-material/Close';
+
 
 const DummyProduct = [
   {
@@ -38,17 +40,53 @@ const DummyProduct = [
 
  const Products = () => {
   const [Cartlist , setCartList] = useState([]);
-  
+  const [openAlert, setOpenAler] = useState(false)
+  console.log(Cartlist);
   
    const cartHandler = (product) =>{  
     const isExist = Cartlist.find((cart)=> cart.id === product.id);
-    setCartList((prev) => [...prev,product]);
+  //  console.log(isExist);
+   
+
+    if(!isExist){
+      setCartList((prev) => [...prev,product]);
+    } else{
+     setOpenAler(true)
+    }
    };
     
+   const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
 
+    setOpenAler(false);
+  };
+
+
+  const action = (
+    <React.Fragment>
+     
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
   return (
    
     <>
+     <Snackbar
+        open={openAlert}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Product Already Added"
+        action={action}
+      />
       <Box sx={{display:'flex',gap:'100px'}} className='container mt-5'>
     {
       DummyProduct?.map((product, index )=> {
